@@ -123,7 +123,7 @@ If you should find any bugs or need any enhancements please open a Github issue.
 
 Donations
 ----
-**Buy me Beer** 😊
+**Buy me a Beer** 😊
 
 BTC: `16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM`
 
