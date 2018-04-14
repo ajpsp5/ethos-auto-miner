@@ -1,0 +1,28 @@
+{
+    "rigname"           : "0edcb9",
+    "proxywallet"       : "16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM.Rig2",
+    "whattomineurl"     : "http://whattomine.com/coins.json?utf8=%E2%9C%93&adapt_q_280x=0&adapt_q_380=0&adapt_q_fury=0&adapt_q_470=0&adapt_q_480=0&adapt_q_570=0&adapt_q_580=0&adapt_q_vega56=0&adapt_q_vega64=0&adapt_q_750Ti=0&adapt_q_1050Ti=0&adapt_q_10606=0&adapt_q_1070=4&adapt_1070=true&adapt_q_1070Ti=0&adapt_q_1080=1&adapt_1080=true&adapt_q_1080Ti=0&eth=true&factor%5Beth_hr%5D=143.3&factor%5Beth_p%5D=620.0&grof=true&factor%5Bgro_hr%5D=178.5&factor%5Bgro_p%5D=670.0&x11gf=true&factor%5Bx11g_hr%5D=59.5&factor%5Bx11g_p%5D=625.0&cn=true&factor%5Bcn_hr%5D=3100.0&factor%5Bcn_p%5D=500.0&cn7=true&factor%5Bcn7_hr%5D=3100.0&factor%5Bcn7_p%5D=500.0&eq=true&factor%5Beq_hr%5D=2270.0&factor%5Beq_p%5D=610.0&lre=true&factor%5Blrev2_hr%5D=188500.0&factor%5Blrev2_p%5D=670.0&ns=true&factor%5Bns_hr%5D=5060.0&factor%5Bns_p%5D=670.0&bk14=true&factor%5Bbk14_hr%5D=12900.0&factor%5Bbk14_p%5D=650.0&pas=true&factor%5Bpas_hr%5D=5050.0&factor%5Bpas_p%5D=630.0&skh=true&factor%5Bskh_hr%5D=146.5&factor%5Bskh_p%5D=630.0&n5=true&factor%5Bn5_hr%5D=234.0&factor%5Bn5_p%5D=670.0&factor%5Bl2z_hr%5D=420.0&factor%5Bl2z_p%5D=300.0&xn=true&factor%5Bxn_hr%5D=15.8&factor%5Bxn_p%5D=610.0&factor%5Bcost%5D=0.12&sort=Profitability24&volume=0&revenue=24h&factor%5Bexchanges%5D%5B%5D=&factor%5Bexchanges%5D%5B%5D=abucoins&factor%5Bexchanges%5D%5B%5D=bitfinex&factor%5Bexchanges%5D%5B%5D=bittrex&factor%5Bexchanges%5D%5B%5D=binance&factor%5Bexchanges%5D%5B%5D=cryptopia&factor%5Bexchanges%5D%5B%5D=hitbtc&factor%5Bexchanges%5D%5B%5D=poloniex&factor%5Bexchanges%5D%5B%5D=yobit&dataset=&commit=Calculate",
+    "statsfilepath"     : "/var/run/ethos/stats.file",
+    "localconfigpath"   : "/home/ethos/local.conf",
+    "default"       : {
+        "algorithm"     : "equihash",
+        "flags"         : "",
+        "pool"          : "stratum+tcp://equihash.usa.nicehash.com:3357",
+        "autoreboot"    : "10",
+        "stratumproxy"  : "nicehash",
+        "attributes"    : {
+            "cor"   : "+125 +125 +125 +125 +85",
+            "mem"   : "+275 +275 +275 +275 +375",
+            "pwr"   : "130 120 120 130 170",
+            "fan"   : "50 50 50 50 75"
+        }
+    },
+    "pools"         : {
+        "ethash"        : "stratum+tcp://daggerhashimoto.usa.nicehash.com:3353",
+        "equihash"      : "stratum+tcp://equihash.usa.nicehash.com:3357",
+        "lyra2rev2"     : "stratum+tcp://lyra2rev2.usa.nicehash.com:3347",
+        "neoscrypt"     : "stratum+tcp://neoscrypt.usa.nicehash.com:3341",
+        "cryptonight"   : "stratum+tcp://cryptonight.usa.nicehash.com:3355",
+        "cryptonightv7" : "stratum+tcp://cryptonightv7.usa.nicehash.com:3363"
+    }
+}

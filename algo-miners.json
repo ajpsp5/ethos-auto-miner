@@ -1,0 +1,25 @@
+{
+    "cryptonightv7" : {
+        "miner"         : "claymore-xmr",
+        "flags"         : "-pow7 1",
+        "attributes"    : {
+
+        }
+    },
+    "ethash"        : {
+        "miner" : "claymore",
+        "flags" : ""
+    },
+    "equihash"      : {
+        "miner" : "ewbf-zcash",
+        "flags" : ""
+    },
+    "lyra2rev2"     : {
+        "miner" : "ccminer",
+        "flags" : "-a lyra2v2"
+    },
+    "neoscrypt"     : {
+        "miner" : "ccminer",
+        "flags" : "-a neoscrypt"
+    }
+}

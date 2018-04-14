@@ -1,0 +1,34 @@
+{
+    "cryptonightv7" : {
+        "miner"         : "claymore-xmr",
+        "flags"         : "-pow7 1",
+        "attributes"    : {
+
+        }
+    },
+    "cryptonight" : {
+        "miner"         : "claymore-xmr",
+        "flags"         : "-pow7 1"
+    },
+    "ethash"        : {
+        "miner"         : "claymore",
+        "flags"         : "--cl-global-work 8192 --farm-recheck 200",
+        "attributes"    : {
+            "cor"   : "2000 2000 1200 1200 1200 1200",
+            "mem"   : "2200 2250 2250 2000 2250 2000",
+            "pwr"   : "5 5 5 5 5 5"
+        }
+    },
+    "equihash"      : {
+        "miner" : "ewbf-zcash",
+        "flags" : ""
+    },
+    "lyra2rev2"     : {
+        "miner" : "ccminer",
+        "flags" : "-a lyra2v2"
+    },
+    "neoscrypt"     : {
+        "miner" : "ccminer",
+        "flags" : "-a neoscrypt"
+    }
+}
