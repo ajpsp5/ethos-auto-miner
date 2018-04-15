@@ -123,7 +123,7 @@ If you should find any bugs or need any enhancements please open a Github issue.
 
 Donations
 ----
-Your rig will donate one hour a day of mining time towards improving the program and towards a free mobile project under way for monintoring your Ethos rig. If you have any questions, feedback or suggestions please submit a Github issue.
+Your rig will donate one hour a day of mining time, roughly $0.15/day, towards improving the program and towards a free mobile project under way for monintoring your Ethos rig. If you have any questions, feedback or suggestions please submit a Github issue.
 
 **Buy me a Beer** 😊
 
