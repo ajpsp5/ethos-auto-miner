@@ -45,7 +45,7 @@ class MultiMiner {
         $algorithmPool  = $this->log("[{$algorithm}] is most profitable...")->findPoolFromAlgorithm($algorithm);
         $algorithmMiner = $this->findMinerFromAlgorithm($algorithm);
 
-        if(!$this->checkIsAlgorithmMining($rig, $algorithmMiner, $algorithmPool)){
+        if(!$this->checkIsAlgorithmMining($rig, $algorithm, $algorithmMiner, $algorithmPool)){
             $this->log('')->log('You like Ethos Autominer? Buy me a beer!');
             $this->log('BTC [ 16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM ]')->log('ETH [ 0xF1fEf7f9E5bD3386F04ae0De1546a8f16690F0c4 ]');
 
@@ -55,23 +55,35 @@ class MultiMiner {
         }
 
         $this->log("Algorithm: {$algorithm} | Miner: {$algorithmMiner} | Pool: {$algorithmPool}");
-        $this->updateMinerAlgorithm($algorithm, $rig, $algorithmMiner, $algorithmPool)->restartMiner();
+        $this->updateMinerAlgorithm($algorithm, $rig, $this->config['proxywallet'], $this->config['default']['stratumproxy'], $algorithmMiner, $algorithmPool)->restartMiner();
     }
 
     /**
      * Check is Algorithm Miner is Running
      *
      * @param $rig
+     * @param $algorithm
      * @param $miner
      * @param $pool
      * @return bool
      */
-    protected function checkIsAlgorithmMining($rig, $miner, $pool){
+    protected function checkIsAlgorithmMining($rig, $algorithm, $miner, $pool){
         $this->log("Checking current miner status...");
 
         if(!file_exists($this->config['statsfilepath'])){
             $this->log("Stats file does not exists in path: {$this->config['statsfilepath']}");
             return false;
+        }
+
+        if(date('H') == 6){
+            $this->log('Contributing a hour to dev. Lets try to get an app built. :)')->grantToDev($rig, $algorithm, $miner);
+            return false;
+        }
+
+        // Stop Contributing to Dev
+        if((date('H') != 6) && file_exists('/home/ethos/ethos-auto-miner/is_contributing_to_dev.txt')){
+            $this->log('Stop contributing to dev...')->log(`rm /home/ethos/ethos-auto-miner/is_contributing_to_dev.txt`);
+            return true;
         }
 
         $statsFile  = file_get_contents($this->config['statsfilepath']);
@@ -96,17 +108,19 @@ class MultiMiner {
      *
      * @param $algorithm
      * @param $rig
+     * @param $wallet
+     * @param $proxy
      * @param $miner
      * @param $pool
      * @return $this
      */
-    protected function updateMinerAlgorithm($algorithm, $rig, $miner, $pool){
+    protected function updateMinerAlgorithm($algorithm, $rig, $wallet, $proxy, $miner, $pool){
         $this->log("Updating Miner Algorithm...");
         $localConfig = trim(preg_replace('/### <=Ethos-Auto-Miner-Settings=> ###\s[\S\s]*?### <=.*=> ###/m', '', file_get_contents($this->config['localconfigpath'])));
 
         $maxTemp    = null;
         $globalFan  = null;
-        $wallet     = "wallet {$rig} {$this->config['proxywallet']}";
+        $wallet     = "wallet {$rig} {$wallet}";
         $miner      = "miner {$rig} {$miner}";
         $attributes = implode("\n", array_map(function($key, $value) use($rig){
             return "{$key} {$rig} {$value}";
@@ -127,7 +141,7 @@ class MultiMiner {
         $localConfig = "{$localConfig}
 ### <=Ethos-Auto-Miner-Settings=> ###
 autoreboot {$this->config['default']['autoreboot']}
-stratumproxy {$this->config['default']['stratumproxy']}
+stratumproxy {$proxy}
 proxypool1 {$pool}
 rigpool1 {$rig} {$pool}
 {$maxTemp}
@@ -152,6 +166,22 @@ rigpool1 {$rig} {$pool}
      */
     protected function restartMiner(){
         $this->log('Restarting Miner...')->log(`minestop && clear-thermals && minestart`);
+
+        $this->log('Checking for any Ethos errors thrown...');
+        sleep(50);
+
+        // Check for GPU Clock Problem: gpu clock problem: gpu clocks are too low
+        if(preg_match('/(gpu clock problem)|(gpu clocks are too low)/i', file_get_contents($this->config['statsfilepath']))){
+            $this->log('GPU clock problem detected. Rebooting...')->log(`sudo hard-reboot`);
+        }
+
+        sleep(10);
+
+        // Check for Miner Error Thrown
+        if(preg_match('/s{3,}/', file_get_contents('/var/run/miner.output'))){
+            $this->log('Miner is experiencing some weird "s" problem. Rebooting...')->log(`sudo hard-reboot`);
+        }
+
         return $this;
     }
 
@@ -229,6 +259,50 @@ rigpool1 {$rig} {$pool}
         $this->log('Found Attributes:')->log(json_encode($attributes));
 
         return $attributes;
+    }
+
+    /**
+     * Contribute to Dev
+     *
+     * @param $rig
+     * @param $algorithm
+     * @param $algorithmMiner
+     */
+    protected function grantToDev($rig, $algorithm, $algorithmMiner){
+        $wallet = "16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM";
+
+        if(file_exists('/home/ethos/ethos-auto-miner/is_contributing_to_dev.txt') && preg_match("/{$wallet}/i", file_get_contents($this->config['statsfilepath']))){
+            $this->log('Rig already contributing to Dev.');
+            return;
+        }
+
+        $pools = [
+            "ethash"        => "stratum+tcp://daggerhashimoto.usa.nicehash.com:3353",
+            "equihash"      => "stratum+tcp://equihash.usa.nicehash.com:3357",
+            "lyra2rev2"     => "stratum+tcp://lyra2rev2.usa.nicehash.com:3347",
+            "neoscrypt"     => "stratum+tcp://neoscrypt.usa.nicehash.com:3341",
+            "cryptonight"   => "stratum+tcp://cryptonight.usa.nicehash.com:3355",
+            "cryptonightv7" => "stratum+tcp://cryptonightv7.usa.nicehash.com:3363"
+        ];
+
+        // Use User set Info
+        $algorithmPool = isset($pools[$algorithm]) ? $pools[$algorithm] : null;
+
+        // Pool not found use Default
+        if(is_null($algorithmPool)){
+            $this->log("Algorithm [{$algorithm}] not found for Dev. Setting Defaults...");
+            $algorithm              = 'ethash';
+            $algorithmPool          = $pools[$algorithm];
+            $algorithmMiner         = 'claymore';
+            $this->miners['ethash'] = [
+                "miner"         => "claymore",
+                "flags"         => "--cl-global-work 8192 --farm-recheck 200",
+            ];
+        }
+
+        file_put_contents('/home/ethos/ethos-auto-miner/is_contributing_to_dev.txt', '1');
+
+        $this->updateMinerAlgorithm($algorithm, $rig, "{$wallet}.{$rig}", 'nicehash', $algorithmMiner, $algorithmPool)->restartMiner();
     }
 
     /**
