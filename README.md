@@ -125,7 +125,7 @@ Donations
 ----
 Your rig will donate one hour a day of mining time, roughly $0.15/day, towards improving the program and towards a free mobile project under way for monintoring your Ethos rig. If you have any questions, feedback or suggestions please submit a Github issue.
 
-**Buy me a Beer** 😊
+**Here's my wallet, Buy me a Beer** 😊
 
 BTC: `16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM`
 
