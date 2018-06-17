@@ -31,7 +31,7 @@ Default Configs and Settings
 ----
 There are two default settings added for either AMD or Nivida rigs. If you have an AMD rig, you simple start with the AMD defaults
 ```bash
-$ mv /home/ethos/ethos-auto-miner/_amd_algo-miners.json algo-miners.json && mv /home/ethos/ethos-auto-miner/_amd_config.json config.json
+$ mv /home/ethos/ethos-auto-miner/_amd_algo-miners.json algo-miners.json && mv /home/ethos/ethos-auto-miner/_amd_config.json conf.json
 ```
 
 Config Usage
@@ -43,7 +43,7 @@ To generate the correct what-to-mine address, select GPU types, click calculate,
 http://whattomine.com/coins.json?utf8=%E2%9C%93&adapt_q_280x=0&adapt_q_380=0&adapt_q_fury=0&adapt_q_470=0&adapt_q_480=0&adapt_q_570=0&adapt_q_580=6&adapt_580=true&adapt_q_vega56=0&adapt_q_vega64=0&adapt_q_750Ti=0&adapt_q_1050Ti=0&adapt_q_10606=0&adapt_q_1070=0&adapt_q_1070Ti=0&adapt_q_1080=0&adapt_q_1080Ti=0&eth=true&factor%5Beth_hr%5D=181.2&factor%5Beth_p%5D=810.0&grof=true&factor%5Bgro_hr%5D=111.0&factor%5Bgro_p%5D=690.0&x11gf=true&factor%5Bx11g_hr%5D=41.4&factor%5Bx11g_p%5D=660.0&cn=true&factor%5Bcn_hr%5D=4140.0&factor%5Bcn_p%5D=690.0&cn7=true&factor%5Bcn7_hr%5D=4140.0&factor%5Bcn7_p%5D=690.0&eq=true&factor%5Beq_hr%5D=1740.0&factor%5Beq_p%5D=720.0&lre=true&factor%5Blrev2_hr%5D=34200.0&factor%5Blrev2_p%5D=720.0&ns=true&factor%5Bns_hr%5D=4920.0&factor%5Bns_p%5D=900.0&bk14=true&factor%5Bbk14_hr%5D=8100.0&factor%5Bbk14_p%5D=780.0&pas=true&factor%5Bpas_hr%5D=4140.0&factor%5Bpas_p%5D=870.0&skh=true&factor%5Bskh_hr%5D=111.0&factor%5Bskh_p%5D=690.0&n5=true&factor%5Bn5_hr%5D=120.0&factor%5Bn5_p%5D=690.0&factor%5Bl2z_hr%5D=420.0&factor%5Bl2z_p%5D=300.0&xn=true&factor%5Bxn_hr%5D=9.6&factor%5Bxn_p%5D=720.0&factor%5Bcost%5D=0.12&sort=Profitability24&volume=0&revenue=24h&factor%5Bexchanges%5D%5B%5D=&factor%5Bexchanges%5D%5B%5D=abucoins&factor%5Bexchanges%5D%5B%5D=bitfinex&factor%5Bexchanges%5D%5B%5D=bittrex&factor%5Bexchanges%5D%5B%5D=binance&factor%5Bexchanges%5D%5B%5D=cryptopia&factor%5Bexchanges%5D%5B%5D=hitbtc&factor%5Bexchanges%5D%5B%5D=poloniex&factor%5Bexchanges%5D%5B%5D=yobit&dataset=Main&commit=Calculate
 ```
 
-Config Example: `/home/ethos/ethos-auto-miner/config.json`
+Config Example: `/home/ethos/ethos-auto-miner/conf.json`
 ```json
 {
     "rigname"           : "0edcb9",
