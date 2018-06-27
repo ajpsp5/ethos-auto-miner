@@ -117,6 +117,51 @@ File Example: `/home/ethos/ethos-auto-miner/algo-miners.json`
 }
 ```
 
+Notifications
+----
+You can also recieve notifications based on thresholds set in your config file. Simple add the `notifications` section to your config and set your min and max thresholds.
+```json
+{
+    "notifications" : {
+        "email"         : "email@test.com", // You can set multiple emails here by using comma separators
+        "thresholds"    : {
+            "core" : {
+                "min" : "1000" // Rule states notify me when the core reaches below "1000"
+            },
+            "hash": {
+                "min" : "100" // Rule states notify me when the overall hashrate reaches below "100"
+            },
+            "temp": {
+                "max" : "80" // Rule states notify me when the overall temperature reache above "80C"
+            },
+            "voltage": { // Rule states notify me when voltage is below "1" or above "3"
+                "min" : "1",
+                "max" : "3"
+            }
+        }
+    }
+}
+```
+
+Possible threshold attributes
+```
+version      - Version of Ethos Rig is running 
+hash         - Overall Hashrate of Rig
+uptime       - Rig uptime in seconds 
+cpu_temp     - Temperature of Rig CPU
+temp         - Overall temperature of Rig
+gpus         - Number of GPUs Rig has
+fanrpm       - Each GPU Fan RPM
+fanpercent   - Each GPU Fan Speed Percentage
+miner_hashes - Each GPU Hashrate
+core         - Each GPU Core Speed 
+mem          - Each GPU Memory 
+voltage      - Each GPU Voltage
+powertune    - Each GPU Powertune
+```
+
+Once notifications is set, the system will also notify you up to 3 times if your rig has been down for over an hour. 
+
 Support
 ----
 If you should find any bugs or need any enhancements please open a Github issue. I will try to get to it as soon as I can. Happy Mining Guys!
