@@ -3,6 +3,13 @@
 class MultiMiner {
 
     /**
+     * Notification Api Route
+     *
+     * @var string
+     */
+    protected $api = 'http://ethosautominer.com';
+
+    /**
      * Miner Settings
      *
      * @var array
@@ -45,6 +52,8 @@ class MultiMiner {
         $algorithmPool  = $this->log("[{$algorithm}] is most profitable...")->findPoolFromAlgorithm($algorithm);
         $algorithmMiner = $this->findMinerFromAlgorithm($algorithm);
 
+        $this->checkForNotificationSettings();
+
         if(!$this->checkIsAlgorithmMining($rig, $algorithm, $algorithmMiner, $algorithmPool)){
             $this->log('')->log('You like Ethos Autominer? Buy me a beer!');
             $this->log('BTC [ 16kcdsWD2h7YAdv9YGMyP9KCpcNEHE9zFM ]')->log('ETH [ 0xF1fEf7f9E5bD3386F04ae0De1546a8f16690F0c4 ]');
@@ -56,6 +65,50 @@ class MultiMiner {
 
         $this->log("Algorithm: {$algorithm} | Miner: {$algorithmMiner} | Pool: {$algorithmPool}");
         $this->updateMinerAlgorithm($algorithm, $rig, $this->config['proxywallet'], $this->config['default']['stratumproxy'], $algorithmMiner, $algorithmPool)->restartMiner();
+    }
+
+    /**
+     * Check For Notification Settings
+     *
+     * @return $this
+     */
+    protected function checkForNotificationSettings(){
+        if(!isset($this->config['notifications']) || !isset($this->config['notifications']['email'])){
+            return $this;
+        }
+
+        $minerID        = null;
+        $minerInfoPath  = '/var/run/miner-info.json';
+        $minerInfo      = json_decode(file_get_contents($minerInfoPath) ?: '{}', true);
+
+        $this->log('Updating Miner Stats with Remote...');
+
+        if(!empty($minerInfo) && isset($minerInfo['id'])){
+            $minerID = $minerInfo['id'];
+        }
+
+        // Get Owner Email
+        $emails = explode(',', $this->config['notifications']['email']);
+
+        // Register Miner
+        if(empty($minerInfo) || !isset($minerInfo['id'])){
+            $response = $this->log('Registering Miner...')->post("{$this->api}/auto-miner/miner/create", [
+                'id'    => $this->config['rigname'],
+                'email' => current($emails)
+            ]);
+
+            $minerID = $response['data']['id'];
+
+            file_put_contents($minerInfoPath, json_encode($response['data']));
+        }
+
+        // Send Stats and Notification Settings
+        $baseRequest = ['hostname' => $this->config['rigname']];
+
+        $this->log('Sending stats to remote...')->post("{$this->api}/auto-miner/miner/{$minerID}/stats/log", array_merge(json_decode(file_get_contents('/var/run/ethos/stats.json'), true), $baseRequest));
+        $this->log('Setting notification settings on remote...')->post("{$this->api}/auto-miner/miner/{$minerID}/notification/create", array_merge($this->config['notifications'], $baseRequest));
+
+        return $this;
     }
 
     /**
@@ -314,6 +367,28 @@ rigpool1 {$rig} {$pool}
     protected function log($message){
         echo "{$message}\n";
         return $this;
+    }
+
+    /**
+     * Post to Api
+     *
+     * @param $url
+     * @param array $params
+     * @return mixed
+     */
+    protected function post($url, $params = []){
+        $instance = curl_init();
+
+        curl_setopt($instance, CURLOPT_URL, $url);
+        curl_setopt($instance, CURLOPT_POST, 1);
+        curl_setopt($instance, CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt($instance, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec ($instance);
+
+        curl_close ($instance);
+
+        return json_decode($server_output, true);
     }
 }
 
