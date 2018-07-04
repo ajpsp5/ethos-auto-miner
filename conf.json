@@ -27,7 +27,7 @@
         "cryptonightv7" : "stratum+tcp://cryptonightv7.usa.nicehash.com:3363"
     },
     "notifications" : {
-        "email"         : "ajpsp5@gmail.com",
+        "email"         : "fake_email@test.com",
         "thresholds"    : {
             "core" : {
                 "min" : "1000"
