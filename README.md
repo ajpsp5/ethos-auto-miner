@@ -71,9 +71,28 @@ Config Example: `/home/ethos/ethos-auto-miner/conf.json`
         "neoscrypt"     : "stratum+tcp://neoscrypt.usa.nicehash.com:3341",
         "cryptonight"   : "stratum+tcp://cryptonight.usa.nicehash.com:3355",
         "cryptonightv7" : "stratum+tcp://cryptonightv7.usa.nicehash.com:3363"
+    },
+    "notifications" : {
+        "email"         : "ajpsp5@gmail.com", // Email to be notified
+        "thresholds"    : {
+            "core" : {
+                "min" : "1000"
+            },
+            "hash": {
+                "min" : "100"
+            },
+            "temp": {
+                "max" : "80"
+            },
+            "voltage": {
+                "min" : "1",
+                "max" : "3"
+            }
+        }
     }
 }
 ```
+Make sure you update the `notification` section email to the email that needs to be notified when your rig is down or meets an threshold.
 
 Algorithm Settings
 ----
