@@ -92,7 +92,7 @@ Config Example: `/home/ethos/ethos-auto-miner/conf.json`
     }
 }
 ```
-Make sure you update the `notification` section email to the email that needs to be notified when your rig is down or meets an threshold.
+Make sure you update the `notification` section email to the email that needs to be notified when your rig is down or meets an threshold. ***IMPORTANT*** *rigname* must match your rig's information.
 
 Algorithm Settings
 ----
@@ -180,6 +180,14 @@ powertune    - Each GPU Powertune
 ```
 
 Once notifications is set, the system will also notify you up to 3 times if your rig has been down for over an hour. 
+
+Common Mistakes
+----
+- Why isn't ethos-auto-miner mining?
+   - Make sure to change the **rigname** (f72a8a) attribute in the config to the rigname displayed in your ethos panel?
+- Why am I not recieving any notification emails?
+   - Make sure to replace the sample **notification email** (fake_email@test.com) attribute in the `config.json` with the email you want to recieve notifications. You can also list emails using a comma separator like so: `bob.mining@test.com, john.doe@test.com`.
+    
 
 Support
 ----
